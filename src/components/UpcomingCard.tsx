@@ -106,6 +106,14 @@ export function UpcomingCard({ session, type }: UpcomingCardProps) {
             Материалы занятия
           </a>
         )}
+
+                  {session.notes && (
+            <div className="mt-3 pt-3 border-t border-gray-100">
+              <p className="text-xs text-gray-600">
+                <span className="font-medium">Примечания:</span> {session.notes}
+              </p>
+            </div>
+          )}
       </div>
     </div>
   );
