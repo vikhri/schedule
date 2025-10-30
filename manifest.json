@@ -4,7 +4,7 @@
   "name": "Расписние КП",
   "icons": [
     {
-      "src": "",
+      "src": "apple-touch-icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
