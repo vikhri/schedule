@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Plus } from 'lucide-react';
+import { Calendar, Plus, AlertCircle, X } from 'lucide-react';
 import { Session } from '../lib/supabase';
 import { UpcomingCard } from '../components/UpcomingCard';
 import { ScheduleTable } from '../components/ScheduleTable';
@@ -24,9 +24,8 @@ export function Schedule({
   loading
 }: ScheduleProps) {
   const [filter, setFilter] = useState<FilterType>('future');
-
-  // NEW: фильтр по типу занятий
   const [typeFilter, setTypeFilter] = useState<'all' | 'theory' | 'practical'>('all');
+  const [showAlert, setShowAlert] = useState(true);
 
   const now = new Date();
   const filteredSessions = sessions
@@ -65,14 +64,44 @@ export function Schedule({
 
   return (
     <>
-      {loading ? (
-        <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
-          <p className="mt-4 text-gray-600">Загрузка...</p>
+      {showAlert && (
+        <div className="fixed top-0 left-0 right-0 bg-amber-50 border-b-2 border-amber-400 px-4 py-4 z-40 shadow-md">
+          <div className="max-w-7xl mx-auto flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-amber-900 font-medium">
+                  ⚠️ Отметься в табличке. На сколько дней едешь на практику 8-9 ноября.
+                </p>
+                <a
+                  href="https://docs.google.com/spreadsheets/d/12zaEQrEvwml8k_zNuo34OT5sMXe5HZa1tYNL63DXi_U/edit?gid=1659407134#gid=1659407134"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-700 underline hover:text-amber-800 font-medium text-sm mt-1 inline-block"
+                >
+                  Открыть таблицу →
+                </a>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowAlert(false)}
+              className="text-amber-600 hover:text-amber-800 flex-shrink-0 mt-0.5"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-8">
+      )}
+
+      <div className={showAlert ? 'pt-24' : ''}>
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
+            <p className="mt-4 text-gray-600">Загрузка...</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-8">
             <UpcomingCard session={upcomingTheory} type="theory" />
             <UpcomingCard session={upcomingPractical} type="practical" />
           </div>
@@ -147,8 +176,9 @@ export function Schedule({
               isAdmin={isAdmin}
             />
           </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 }
