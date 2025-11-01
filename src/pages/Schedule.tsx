@@ -71,7 +71,7 @@ export function Schedule({
               <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-amber-900 font-medium">
-                  ⚠️ Отметься в табличке. На сколько дней едешь на практику 8-9 ноября.
+                  Отметься в табличке. На сколько дней едешь на практику 8-9 ноября.
                 </p>
                 <a
                   href="https://docs.google.com/spreadsheets/d/12zaEQrEvwml8k_zNuo34OT5sMXe5HZa1tYNL63DXi_U/edit?gid=1659407134#gid=1659407134"
