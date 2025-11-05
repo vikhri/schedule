@@ -25,7 +25,7 @@ export function Schedule({
 }: ScheduleProps) {
   const [filter, setFilter] = useState<FilterType>('future');
   const [typeFilter, setTypeFilter] = useState<'all' | 'theory' | 'practical'>('all');
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
 
   const now = new Date();
   const filteredSessions = sessions
@@ -168,7 +168,6 @@ export function Schedule({
                 )}
               </div>
             </div>
-
             <ScheduleTable
               sessions={filteredSessions}
               onEdit={onEditSession}
