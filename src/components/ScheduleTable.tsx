@@ -9,6 +9,28 @@ type ScheduleTableProps = {
 };
 
 export function ScheduleTable({ sessions, onEdit, onDelete, isAdmin }: ScheduleTableProps) {
+  const parseLinksInText = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+
+    return parts.map((part, index) => {
+      if (urlRegex.test(part)) {
+        return (
+          <a
+            key={index}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-700 hover:underline break-all"
+          >
+            {part}
+          </a>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   const formatDateTime = (date: string) => {
     return new Date(date).toLocaleDateString('ru-RU', {
       day: 'numeric',
@@ -136,7 +158,7 @@ export function ScheduleTable({ sessions, onEdit, onDelete, isAdmin }: ScheduleT
           {session.notes && (
             <div className="mt-3 pt-3 border-t border-gray-100">
               <p className="text-xs text-gray-600">
-                <span className="font-medium">Примечания:</span> {session.notes}
+                <span className="font-medium">Примечания:</span> {parseLinksInText(session.notes)}
               </p>
             </div>
           )}
