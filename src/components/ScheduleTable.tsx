@@ -97,7 +97,7 @@ export function ScheduleTable({ sessions, onEdit, onDelete, isAdmin }: ScheduleT
         return true;
       }
     }
-    return false;
+    return true;
   };
 
   return (
