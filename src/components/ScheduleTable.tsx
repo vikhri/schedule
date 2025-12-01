@@ -90,13 +90,27 @@ export function ScheduleTable({ sessions, onEdit, onDelete, isAdmin }: ScheduleT
     );
   }
 
+  const shouldShowSemesterHeader = (index: number, currentSession: Session) => {
+    if (index === 0) {
+      const sessionDate = new Date(currentSession.date_start);
+      if (sessionDate.getMonth() === 1 && sessionDate.getDate() === 5) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <div className="space-y-4">
-      {sessions.map((session) => (
-        <div
-          key={session.id}
-          className="bg-white border border-gray-200 rounded-lg p-4 md:p-5 hover:shadow-md transition-shadow"
-        >
+      {sessions.map((session, index) => (
+        <>
+          {shouldShowSemesterHeader(index, session) && (
+            <h3 className="text-lg font-bold text-gray-900 mt-6 mb-4 pt-2">Второй семестр</h3>
+          )}
+          <div
+            key={session.id}
+            className="bg-white border border-gray-200 rounded-lg p-4 md:p-5 hover:shadow-md transition-shadow"
+          >
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-3">
             <div className="flex gap-2">
               <span
@@ -162,7 +176,8 @@ export function ScheduleTable({ sessions, onEdit, onDelete, isAdmin }: ScheduleT
               </p>
             </div>
           )}
-        </div>
+          </div>
+        </>
       ))}
     </div>
   );
